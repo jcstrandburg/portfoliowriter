@@ -1,0 +1,84 @@
+.menuButton {
+	display: inline-block;
+	background-color: rgb(32,48,64);
+	color: white;
+}
+
+.expanded .menuButton {
+	background-color: white;
+	color: black;
+}
+
+.menu {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.menu ul {
+	padding: 0;
+}
+
+.menu li {
+	display: block;
+	background-color: rgb(32,48,64);
+	color: white;
+	width: auto;
+	position: relative;
+}
+
+.menu a {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+	width: auto;
+	padding: .25em;
+	font-size: 1.25em;
+	/*border: solid 1px black;*/
+}
+
+.menu li.expand {
+	background-color: white;
+	color: black;
+}
+
+.menu a:hover {
+	background-color: rgb(180,180,180);
+}
+
+.menu ul {
+	display: none;
+}
+
+.menu.expanded > ul {
+	margin: 0;
+	display: block;
+	position: absolute;
+	top: 100%;
+}
+
+.menu ul li.expand > ul {
+	display: block;
+	position: absolute;
+	top: 100%;
+	left: 0%;	
+}
+
+.menu ul li.expand li.expand > ul {
+	left: 100%;
+	top: 0%;
+}
+
+@media all and (min-width: 600px) {
+	.menu > ul {
+		display: block;
+	}
+
+	.menu > ul > li {
+		display: inline-block;
+	}
+
+	.header .menuButton {
+		display: none;
+	}
+}

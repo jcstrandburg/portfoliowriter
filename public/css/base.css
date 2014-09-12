@@ -1,0 +1,184 @@
+body {
+	margin: 0;
+	background-color: rgb(240,240,240);
+}	
+	
+.header {
+	background-color: rgb(32,48,64);
+	color: white;
+	width: 100%;
+	position: fixed;
+	z-index: 10;
+	border-bottom: solid 2px gray;
+	top: 0;
+	left: 0;
+}
+
+.pagetitle {
+	display: inline-block;
+	font-size: 2.5em;
+	vertical-align: middle;	
+	margin: .25em 1em .25em;
+}
+
+a.anchor{display: block; color: red; position: relative; top: -7em; visibility: hidden;}
+
+.clr {
+	clear:both;
+	height: 0;
+}
+
+.portfolio {
+	margin: 8em auto 0;
+	width: 100%;
+	max-width: 1000px;
+}
+
+.publishSection {
+	border: solid 1px black;
+	background-color: white;
+	font-size: 2em;
+	padding: .25em;
+	text-align: center;
+}
+
+.project, .bio{
+	margin: 1em 0 1em;
+	border: solid 1px black;
+	border-radius: 1em;
+	padding: 1em;
+	background-color: white;
+}
+
+h1 {
+	display: block;
+	background-color: rgb(32,48,64);
+	color: white;
+	text-transform: uppercase;
+	border-radius: .5em;
+	padding: .5em;
+}
+
+.project button {
+	color: white;
+	background-color: rgb(44,62,80);
+	display: block;
+	border-radius: 1em;
+	font-size: 2em;
+	margin: 0 auto 0;
+	cursor: pointer;
+}
+
+.mainimg {
+	max-width: 90%;
+	cursor: pointer;	
+}
+
+.image-section {
+	position: relative;
+	z-index: 1;
+}
+
+.thumb {
+	max-width: 400px;
+	max-height: 50px;
+}
+
+.image-section {
+	text-align: center;
+}
+
+/*image zoomer styles*/
+.zoomContainer {
+	display:none;
+	position:fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.75);
+	z-index: 100;
+	text-align: center;
+}
+
+.zoomPositioner {
+	height: 100%;
+	display: inline-block;
+	background-color: purple;
+	width: 0;
+	vertical-align: middle;
+}
+
+.zoomedImage {
+	margin: 0 auto 0;
+	max-width: 90%;
+	max-height: 90%;
+	vertical-align: middle;
+}
+
+/*Full screen more/less details styles*/
+.project div, .project button {
+	-webkit-transition: opacity 1.2s ease .3s, max-height 1.2s, width 1.2s;
+	-moz-transition: opacity 1.2s ease .3s, max-height 1.2s, width 1.2s;
+	-o-transition: opacity 1.2s ease .3s, max-height 1.2s, width 1.2s;
+	transition: opacity 1.2s ease .3s, max-height 1.2s, width 1.2s;
+}
+
+.project.moreDetails .summary{
+	//max-height: 0;
+	//opacity: 0;
+}
+
+.project.moreDetails .details-section{
+	max-height: 200em;
+	opacity: 100;
+	border-top: solid 1px gray;	
+}
+
+.project.moreDetails .js-moreButton {
+	display: none;
+}
+
+.project.lessDetails .summary{
+	max-height: 200em;
+	opacity: 100;
+}
+
+.project.lessDetails .details-section{
+	max-height: 0;	
+	opacity: 0;	
+}
+
+.project.lessDetails .js-lessButton {
+	display: none;
+}
+
+
+/*responsive section*/
+@media all and (min-width: 700px) {
+	.moreDetails .overview-section {
+		width: 30%;
+		float: left;
+	}
+	
+	.lessDetails .overview-section {
+		width: 49%;
+		float: left;
+	}
+
+	.moreDetails .image-section {
+		width: 68%;
+		float: right;
+	}
+	
+	.lessDetails .image-section {
+		width: 49%;
+		float: right;
+	}	
+}
+
+@media all and (max-width: 500px) {
+	.mainimg {
+		display: none;
+	}
+}
