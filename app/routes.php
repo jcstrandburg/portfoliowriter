@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function(){
+/*Route::get('/', function(){
 	return Redirect::route('projects.index');
-});
+});*/
 
 Route::get('login', function(){
 	return View::make('admin.login');
@@ -24,11 +24,15 @@ Route::post('dologin', function(){
 	$password = Input::get('password');
 	
 	if ( Auth::attempt( array('name'=>$username, 'password'=>$password))) {
-		return Redirect::intended('projects');
+		return Redirect::intended('edit');
 	}
 	else {
 		return Redirect::back()->withInput();
 	}	
+});
+
+Route::get('edit', function(){
+	return Redirect::route('projects.index');
 });
 
 Route::get('logout', function(){

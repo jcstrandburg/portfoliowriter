@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Laravel PHP Framework</title>	
+	<title>Portfolio Writer</title>	
 	<script src='https://code.jquery.com/jquery-1.11.1.min.js'></script>
 	<style>
 		body {
@@ -28,7 +28,7 @@
 			appearance: button;
 			color: black;
 			text-decoration: none;
-			padding: .125em .75em .125em;
+			padding: 0 .75em 0;
 			-o-button: button;
 			-moz-appearance: button;
 			-webkit-appearance: button;
@@ -66,6 +66,11 @@
 		
 		form {
 			display: inline-block;
+		}
+		
+		label {
+			display: inline-block;
+			min-width: 5em;
 		}
 	
 		.container, .subsection, .section {
@@ -207,12 +212,13 @@ function doAjaxDeleteItem(){
 
 function doAjaxCreateItem(){
 	var formdata = {};
-	$(this).find('textarea, input[type=hidden], input[type=text]').each(function(){
+	var form = $(this);	
+	form.find('textarea, input[type=hidden], input[type=text]').each(function(){
 		var field = $(this).attr('name');
 		var value = $(this).val();
 		formdata[field] = value;
 	});
-	var module = $(this).data('module');
+	var module = form.data('module');
 	var optype = 'create-'+module;
 	
 	$.ajax( '{{route('api')}}', {
@@ -230,7 +236,12 @@ function doAjaxCreateItem(){
 				var parentid = '#'+module+'s-'+formdata['project_id'];
 				$(parentid).append( data['data']['html']);
 				flashClass( $(parentid), "successResult");
-				$(parentid + " .ajaxDelete").submit( doAjaxDeleteItem);
+				enhance(false);				
+				
+				form.find('textarea, input[type=text]').each(function(){
+					$(this).val('');
+				});
+				firstchild = form.find('input[type=text]').first().focus();
 			}
 		},
 		error: function(xhr, status, errorThrown){
@@ -241,12 +252,17 @@ function doAjaxCreateItem(){
 	return false;
 }
 
-function enhance(){
+function enhance(firstpass){
+	if (firstpass) {
+		$('.container').addClass('collapse');
+	}
+	
+	$('.enhanceHide').hide();
+	$('.enhanceShow').show();
+	
 	$('.js-showhide').off('click').click(function(){
 		$(this).closest('.container').toggleClass('collapse');
 	});
-	
-	$('.container').addClass('collapse');
 	
 	$('.needsConfirm').off('click').click(function(event){
 		if ( !confirm('Are you sure')){
@@ -264,26 +280,24 @@ function enhance(){
 		$(this).addClass('editing');
 		if ( $(this).prop('tagName') == 'DIV') {
 			$(this).html('<textarea>'+oldval+'</textarea>');
+			var ta = $(this).children().first();			
 		}
 		else {
-			$(this).html("<input type='text' value='"+oldval+"'/>");
+			$(this).html("<input type='text'/>");
+			var ta = $(this).children().first();						
+			ta.val( oldval);			
 		}
-		var ta = $(this).children().first();
+		
 		ta.focus();
 		ta.blur(function(){
 			doEditUpdate( $(this));
 		});
 	});
-	
-	$('.enhanceHide').hide();
-	$('.enhanceShow').show();
-	
-	$('.ajax-form').off('submit').submit(doAjaxCreateItem);
-	
-	$('.ajaxDelete').off('submit').submit(doAjaxDeleteItem);
+	$('.ajax-form').off('submit').submit(doAjaxCreateItem);	
+	$('.ajaxDelete').off('submit').submit(doAjaxDeleteItem);	
 }
 
-$(document).ready(enhance);
+$(document).ready(function(){ enhance(true); });
 </script>
 
 </html>

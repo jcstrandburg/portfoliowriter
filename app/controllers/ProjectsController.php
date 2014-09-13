@@ -21,13 +21,13 @@ class ProjectsController extends BaseController {
 	}
 	
 	public function store() {
-		$this->project->fill( Input::all());	
+		$this->project->fill( Input::all());
 		
 		if ( !$this->project->valid()) {
 			return Redirect::back()->withInput()->with('errors', $this->project->errors);
 		}
 		else {
-			$this->project->save();		
+			$this->project->save();
 			return Redirect::route('projects.index');
 		}
 	}
@@ -55,8 +55,18 @@ class ProjectsController extends BaseController {
 	}
 	
 	public function destroy($id) {
-		$project = Project::find($id);
-		$project->delete();
-		return Redirect::route('projects.index');
+		$project = Project::find($id);	
+		if ( Input::has('confirmed')) {
+			$project->bullets()->delete();
+			$project->links()->delete();
+			$project->images()->delete();
+			//Bullet::where('project_id', '=', $id)->delete();
+			//Link::where('project_id', '=', $id)->delete();
+			//Image::where('project_id', '=', $id)->delete();
+			$project->delete();
+			return Redirect::route('projects.index');
+		} else {
+			return View::make('projects.delete')->withProject( $project);
+		}
 	}
 }

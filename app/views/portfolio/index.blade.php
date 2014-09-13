@@ -2,11 +2,17 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1">	
+	<style type='text/css'>
+	@-ms-viewport { width: device-width; }
+	@-o-viewport { width: device-width; }
+	@viewport { width: device-width; }
+	</style>
 	<title>Justin Strandburg Portfolio</title>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>	
-{{HTML::style('css/base.css')}}
-{{HTML::style('css/nav.css')}}
-{{HTML::script('js/portfolio.js')}}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>	
+	{{HTML::style('css/base.css')}}
+	{{HTML::style('css/nav.css')}}
+	{{HTML::script('js/portfolio.js')}}
 </head>
 <body>
 

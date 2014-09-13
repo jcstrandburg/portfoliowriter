@@ -4,7 +4,7 @@
 	<div class='container'>
 		<div class='section'>
 			<h1>Other Junk</h1>
-			<button type='button' class='js-showhide'>Expand/Hide</button>
+			<button type='button' class='js-showhide enhanceShow'>Expand/Hide</button>
 		</div>
 		<div class='subsection'>
 			<div class='section'>
@@ -17,9 +17,9 @@
 		<div class='container'>
 			<div class='section'>
 				<h1 class='editable heading' data-operation='update-project' data-field='name' data-id='{{$project->id}}'>{{$project->name}}</h1>
-				<button type='button' class='js-showhide'>Expand/Hide</button>
+				<button type='button' class='js-showhide enhanceShow'>Expand/Hide</button>
 				{{ Form::open( array('method'=>'delete', 'route'=>['projects.destroy', $project->id]))}} 
-					<button type='submit' class='needsConfirm'>Delete</button>
+					<button type='submit'>Delete</button>
 				{{ Form::close() }}<br>	
 			</div>
 			
