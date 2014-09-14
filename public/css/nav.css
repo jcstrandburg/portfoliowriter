@@ -70,7 +70,7 @@
 	top: 0%;
 }
 
-@media all and (min-width: 600px) {
+@media all and (min-width: 700px) {
 	.menu > ul {
 		display: block;
 	}

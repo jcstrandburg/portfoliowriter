@@ -41,6 +41,6 @@
 	</div>
 	<div>
 		<button data-projectid='{{$project->id}}' class='js-moreButton' type='button'>Show Me More</button>
-		<button data-projectid='{{$project->id}}' class='js-lessButton' type='button'>Show Me Less</button>
+		<a href='#project-{{$project->id}}' class='hashLink'><button data-projectid='{{$project->id}}' class='js-lessButton' type='button'>Show Me Less</button></a>
 	</div>
 </div>

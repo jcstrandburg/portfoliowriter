@@ -16,9 +16,9 @@ body {
 
 .pagetitle {
 	display: inline-block;
-	font-size: 2.5em;
+	font-size: 2em;
 	vertical-align: middle;	
-	margin: .25em 1em .25em;
+	margin: .25em .5em .25em;
 }
 
 a.anchor{display: block; color: red; position: relative; top: -7em; visibility: hidden;}
@@ -67,6 +67,11 @@ h1 {
 	font-size: 2em;
 	margin: 0 auto 0;
 	cursor: pointer;
+}
+
+.hashLink {
+	text-decoration: none;
+	color: inherit;
 }
 
 .mainimg {
@@ -123,6 +128,7 @@ h1 {
 	-moz-transition: opacity 1.2s ease .3s, max-height 1.2s, width 1.2s;
 	-o-transition: opacity 1.2s ease .3s, max-height 1.2s, width 1.2s;
 	transition: opacity 1.2s ease .3s, max-height 1.2s, width 1.2s;
+	transform: translate3d(0,0,0):
 }
 
 .project.moreDetails .summary{
@@ -160,6 +166,11 @@ h1 {
 
 /*responsive section*/
 @media all and (min-width: 700px) {
+	.pagetitle {
+		font-size: 2.5em;			
+		margin: .25em 1em .25em;
+	}
+
 	.moreDetails .overview-section {
 		width: 30%;
 		float: left;
