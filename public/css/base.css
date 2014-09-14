@@ -63,7 +63,7 @@ h1 {
 	color: white;
 	background-color: rgb(44,62,80);
 	display: block;
-	border-radius: 1em;
+	border-radius: .25em;
 	font-size: 2em;
 	margin: 0 auto 0;
 	cursor: pointer;
@@ -114,6 +114,7 @@ h1 {
 	max-width: 90%;
 	max-height: 90%;
 	vertical-align: middle;
+	border: solid .5em rgb(32,48,64);
 }
 
 /*Full screen more/less details styles*/
@@ -125,8 +126,9 @@ h1 {
 }
 
 .project.moreDetails .summary{
-	//max-height: 0;
-	//opacity: 0;
+	max-height: 0;
+	opacity: 0;
+	pointer-events: none;	
 }
 
 .project.moreDetails .details-section{
@@ -146,11 +148,13 @@ h1 {
 
 .project.lessDetails .details-section{
 	max-height: 0;	
-	opacity: 0;	
+	opacity: 0;
+	pointer-events: none;
 }
 
 .project.lessDetails .js-lessButton {
 	display: none;
+	pointer-events: none;	
 }
 
 

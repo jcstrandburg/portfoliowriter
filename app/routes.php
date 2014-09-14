@@ -11,9 +11,9 @@
 |
 */
 
-/*Route::get('/', function(){
-	return Redirect::route('projects.index');
-});*/
+Route::get('/', function(){
+	return Redirect::to('index.html');
+});
 
 Route::get('login', function(){
 	return View::make('admin.login');
@@ -42,7 +42,7 @@ Route::get('logout', function(){
 
 Route::get('preview', function(){
 	$projects = Project::all();
-	$bio = Misc::where('name', '=', 'bio');
+	$bio = Misc::where('name', '=', 'bio')->firstOrFail();
 	return View::make('portfolio.index')->withProjects( $projects)->withPreview(true)->withBio( $bio);
 });
 
@@ -108,12 +108,12 @@ Route::get('publish', function(){
 	}
 
 	$projects = Project::all();
-	$bio = Misc::where('name', '=', 'bio');
+	$bio = Misc::where('name', '=', 'bio')->firstOrFail();
 	$html = View::make('portfolio.index')->withProjects( $projects)->withPreview(false)->withBio($bio);
-	$path = public_path().'/portfolio.html';
+	$path = public_path().'/index.html';
 	file_put_contents( $path, $html);
 	
-	echo "The static html portfolio page has been written {$path}. View it ".link_to('portfolio.html', 'here').".";
+	echo "The static html portfolio page has been written {$path}. View it ".link_to('index.html', 'here').".";
 	return ob_get_clean();
 });
 
@@ -123,4 +123,5 @@ Route::resource('projects', 'ProjectsController');
 Route::resource('link', 'LinkController');
 Route::resource('bullet', 'BulletController');
 Route::resource('image', 'ImageController');
+Route::resource('misc', 'MiscController');
 

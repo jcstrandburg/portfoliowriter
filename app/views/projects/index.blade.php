@@ -3,12 +3,14 @@
 @section('content')
 	<div class='container'>
 		<div class='section'>
-			<h1>Other Junk</h1>
+			<h1>Misc Data</h1>
 			<button type='button' class='js-showhide enhanceShow'>Expand/Hide</button>
 		</div>
 		<div class='subsection'>
 			<div class='section'>
+				<h2>Bio Text</h2>
 				<div class='editable' data-operation='update-misc' data-field='{{$bio->name}}' data-id='{{$bio->id}}'>{{$bio->value}}</div>
+				{{link_to_route( 'misc.edit', "Edit Field", $bio->id, array('class'=>'enhanceHide'))}}				
 			</div>
 		</div>
 	</div>

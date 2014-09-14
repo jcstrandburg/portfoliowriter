@@ -21,9 +21,9 @@
 <div class='header'>
 	<span class='pagetitle'>Portfolio</span>
 	<div class='menu'>
-		<a href='javascript:void();' class='menuButton'>Menu</a>	
+		<a href='javascript:void(0);' class='menuButton'>Menu</a>	
 		<ul>	
-			<li><a href='#bio'>About Me</a></li><li><a target='_blank' href='https://docs.google.com/document/d/1pq3KNPXM51o-LWv16tiEZlH71mAJFGqqcOLzSdK8T98/edit?usp=sharing'>Resume</a></li><li><a href='javascript:void();'>Projects</a>
+			<li><a href='#bio'>About Me</a></li><li><a target='_blank' href='https://docs.google.com/document/d/1pq3KNPXM51o-LWv16tiEZlH71mAJFGqqcOLzSdK8T98/edit?usp=sharing'>Resume</a></li><li><a href='javascript:void(0);'>Projects</a>
 				<ul>
 					@foreach ($projects as $project)
 						<li><a href='#project-{{$project->id}}'>{{$project->name}}</a></li>
@@ -45,7 +45,7 @@
 	<a class='anchor' name='bio'></a>
 	<div class='bio'>
 		<h1>About Me:</h1>
-		Here is some stuff about me.
+		{{$bio->value}}
 	</div>
 	@foreach ($projects as $project)
 		@include('portfolio.project')

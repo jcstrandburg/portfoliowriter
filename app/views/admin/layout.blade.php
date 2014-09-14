@@ -125,6 +125,11 @@
 			background-color: green;
 		}
 		
+		.adminThumb {
+			height: 50px;		
+			max-width: 100px;
+		}
+		
 		/*for items that should only be shown when jquery runs*/
 		.enhanceShow{
 			display: none;
@@ -152,17 +157,24 @@ function flashClass(domElem, className) {
 	domElem.addClass(className).delay(750).queue(function(next){$(this).removeClass(className); next();});
 }
 
-function doEditUpdate( dom) {
-	parent = dom.parent();
-	newval = dom.val();
+function updateThumbnail(id, value) {
+	$('#thumb-'+id).attr('src', value);
+}
+
+function doEditUpdate( element) {
+	var parent = element.parent();
+	var newval = element.val();
+	var updateCallback = parent.data('postupdate');
+	var id = parent.data('id');
+	var fieldname = parent.data('field');	
 
 	$.ajax( '{{route('api')}}', {
 		method: "post",
 		dataType: "json",
 		data: {
 			'operation-type': parent.data('operation'),
-			'id': parent.data('id'),
-			'field': parent.data('field'),
+			'id': id,
+			'field': fieldname,
 			'value': newval,
 		},
 		success: function( data){
@@ -173,6 +185,9 @@ function doEditUpdate( dom) {
 			}
 			else {
 				flashClass(parent, 'successResult');
+				if (typeof(updateCallback) !== 'undefined') {
+					window[updateCallback](id, newval);
+				}
 			}
 		},
 		error: function(xhr, status, errorThrown){
