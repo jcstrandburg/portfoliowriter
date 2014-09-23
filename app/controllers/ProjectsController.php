@@ -10,7 +10,7 @@ class ProjectsController extends BaseController {
 	}
 
 	public function index()	{
-		$projects = Project::all();
+		$projects = Project::orderBy('sortorder')->get();
 		$miscs = Misc::all();
 		$bio = Misc::where('name', '=', 'bio')->firstOrFail();
 		return View::make('projects.index')->with('projects', $projects)->with('bio', $bio);
@@ -28,6 +28,8 @@ class ProjectsController extends BaseController {
 		}
 		else {
 			$this->project->save();
+			$this->project->sortorder = $this->project->id;
+			$this->project->update();			
 			return Redirect::route('projects.index');
 		}
 	}
@@ -60,13 +62,17 @@ class ProjectsController extends BaseController {
 			$project->bullets()->delete();
 			$project->links()->delete();
 			$project->images()->delete();
-			//Bullet::where('project_id', '=', $id)->delete();
-			//Link::where('project_id', '=', $id)->delete();
-			//Image::where('project_id', '=', $id)->delete();
+			$project->tags()->delete();
 			$project->delete();
 			return Redirect::route('projects.index');
 		} else {
 			return View::make('projects.delete')->withProject( $project);
 		}
+	}
+	
+	public function moveUp() {
+	}
+	
+	public function moveDown() {
 	}
 }

@@ -18,16 +18,20 @@ class Project extends Eloquent {
 	protected $fillable = ['name', 'summary', 'description'];
 	
 	
+	public function tags() {
+		return $this->hasMany('Tag')->orderBy('sortorder');
+	}
+	
 	public function links() {
-		return $this->hasMany('Link');
+		return $this->hasMany('Link')->orderBy('sortorder');
 	}
 	
 	public function bullets() {
-		return $this->hasMany('Bullet');
+		return $this->hasMany('Bullet')->orderBy('sortorder');
 	}
 	
 	public function images() {
-		return $this->hasMany('Image');
+		return $this->hasMany('Image')->orderBy('sortorder');
 	}	
 	
 	private static $rules = ['name'=>'required', 'summary'=>'required', 'description'=>'required'];		

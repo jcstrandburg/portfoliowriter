@@ -47,7 +47,9 @@ class BulletController extends \BaseController {
 			return Redirect::back()->withInput()->with('errors', $this->bullet->errors);
 		}
 		else {
-			$this->bullet->save();		
+			$this->bullet->save();
+			$this->bullet->sortorder = $this->bullet->id;
+			$this->bullet->update();			
 			return Redirect::route('projects.index');
 		}
 	}

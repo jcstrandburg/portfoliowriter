@@ -48,7 +48,9 @@
 		{{$bio->value}}
 	</div>
 	@foreach ($projects as $project)
-		@include('portfolio.project')
+		@if (!$project->hidden)
+			@include('portfolio.project')
+		@endif
 	@endforeach
 	
 	@if (isset($preview) && $preview)

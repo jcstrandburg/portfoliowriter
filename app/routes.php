@@ -40,11 +40,11 @@ Route::get('logout', function(){
 	return Redirect::to('/');
 });
 
-Route::get('preview', function(){
-	$projects = Project::all();
+Route::get('preview', array('before'=>'auth', function(){
+	$projects = Project::orderBy('sortorder')->get();
 	$bio = Misc::where('name', '=', 'bio')->firstOrFail();
 	return View::make('portfolio.index')->withProjects( $projects)->withPreview(true)->withBio( $bio);
-});
+}));
 
 function make_thumb($src, $dest, $desired_width) {
 
@@ -107,7 +107,7 @@ Route::get('publish', function(){
 		echo "<br>";
 	}
 
-	$projects = Project::all();
+	$projects = Project::orderBy('sortorder')->get();
 	$bio = Misc::where('name', '=', 'bio')->firstOrFail();
 	$html = View::make('portfolio.index')->withProjects( $projects)->withPreview(false)->withBio($bio);
 	$path = public_path().'/index.html';
@@ -119,9 +119,76 @@ Route::get('publish', function(){
 
 Route::any('api', ['as'=>'api', 'uses'=>'ApiController@api']);
 
+Route::post('move', function() {
+	$table = ucwords(Input::get('class'));
+	$id = Input::get('id');
+	$direction = Input::get('direction');
+	
+	if ($direction == 'up') {
+		$gator = '<';
+		$order = 'DESC';
+	}
+	else {
+		$gator = '>';
+		$order = 'ASC';
+	}
+	
+	$object = $table::find($id);
+	if ( $table == 'Project') {
+		$object2 = $table::where('sortorder', $gator, $object->sortorder)->orderBy('sortorder', $order)->first();
+	}
+	else {
+		$object2 = $table::where('sortorder', $gator, $object->sortorder)->where('project_id','=',$object->project_id)->orderBy('sortorder', $order)->first();
+	}
+	
+	$output = "";
+	$output .= "<h2>First Object</h2>";
+	$output .= print_r($object->toArray(), true);
+	$output .= "<h2>Second Object</h2>";
+	if ( $object2 !== null) {
+		$temp = $object->sortorder;
+		$object->sortorder = $object2->sortorder;
+		$object2->sortorder = $temp;
+
+		$object->update();
+		$object2->update();
+		
+		$output .= print_r($object2->toArray(), true);
+	}
+	else {
+		if ( Request::ajax()) {
+			return array('status'=>'warning', 'message'=>"Item can't be moved");			
+		}
+		$output .= "No object";
+	}
+	
+	if (Request::ajax()) {
+		return array('status'=>'success');
+	}
+	else {
+		return Redirect::route('projects.index');
+	}
+});
+
+Route::post('projects/set-visibility', function(){
+	$id = Input::get('id');
+	$project = Project::find($id);
+	$visibility = Input::get('visibility');
+	if ( $visibility == 'hidden') {
+		$project->hidden = true;
+	}
+	else if ( $visibility == 'visible') {
+		$project->hidden = false;
+	}
+	$project->update();
+	
+	return Redirect::route('projects.index');
+});
+
 Route::resource('projects', 'ProjectsController');
 Route::resource('link', 'LinkController');
 Route::resource('bullet', 'BulletController');
 Route::resource('image', 'ImageController');
+Route::resource('tag', 'TagController');
 Route::resource('misc', 'MiscController');
 

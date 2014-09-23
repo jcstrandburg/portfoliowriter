@@ -1,6 +1,6 @@
 body {
 	margin: 0;
-	background-color: rgb(240,240,240);	
+	background-color: rgb(230,230,230);	
 }	
 	
 .header {
@@ -86,7 +86,7 @@ h1 {
 
 .thumb {
 	max-width: 400px;
-	max-height: 50px;
+	max-height: 75px;
 }
 
 .image-section {
@@ -122,6 +122,20 @@ h1 {
 	border: solid .5em rgb(32,48,64);
 }
 
+ul.tags {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul.tags li {
+	display: inline-block;
+	border: solid 1px black;
+	background-color: rgb(230,230,230);
+	border-radius: .4em;
+	padding: .25em;	
+	margin: .125em;
+}
+
 /*Full screen more/less details styles*/
 .project div, .project button {
 	-webkit-transition: opacity 1.2s ease .3s, max-height 1.2s, width 1.2s;
@@ -134,6 +148,7 @@ h1 {
 .project.moreDetails .summary{
 	max-height: 0;
 	opacity: 0;
+
 	pointer-events: none;	
 }
 
@@ -141,6 +156,7 @@ h1 {
 	max-height: 200em;
 	opacity: 100;
 	border-top: solid 1px gray;	
+	margin-bottom: 1em;
 }
 
 .project.moreDetails .js-moreButton {
@@ -189,6 +205,11 @@ h1 {
 	.lessDetails .image-section {
 		width: 49%;
 		float: right;
+	}	
+
+	.thumb {
+		max-width: 400px;
+		max-height: 50px;
 	}	
 }
 

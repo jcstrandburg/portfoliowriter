@@ -53,11 +53,6 @@
 			-webkit-appearance: button;
 			-moz-appearance:    button;
 			appearance:         button;
-			/*background-color: white;
-			border: solid 2px black;
-			border-radius: 1em;
-			color: black;
-			padding: 2px;*/
 			color: black;
 			padding: 0 1em 0;
 			text-decoration: none;
@@ -99,7 +94,7 @@
 		}
 		
 		/*Editable styles*/
-		div, span {
+		div, span, .editable, .moveable {
 			transition: background-color 3s;
 		}
 		
@@ -107,18 +102,39 @@
 			font-size: 100%;
 		}
 		
+		.editable {
+			padding: .2em;
+			border: solid 2px rgb(225,225,225);
+			cursor: pointer;
+		}
+
+		span.editable{
+			display: inline-block;
+			min-width: 2em;
+		}
+
+		div.editable{
+			display: block;
+			min-width: 2em;
+			min-height: 2em;
+		}		
+		
 		.editable textarea {
 			width: 99%;
 			min-height: 9em; 
 		}
 		
 		.editable input[type=text] {
-			width: 30%;
-			min-width: 50em;
+			width: 25%;
+			min-width: 30em;
 		}
 		
 		.errorResult{
 			background-color: red;
+		}
+
+		.warningResult{
+			background-color: yellow;
 		}
 		
 		.successResult{
@@ -126,7 +142,7 @@
 		}
 		
 		.adminThumb {
-			height: 50px;		
+			height: 50px;
 			max-width: 100px;
 		}
 		
@@ -162,6 +178,7 @@ function updateThumbnail(id, value) {
 }
 
 function doEditUpdate( element) {
+	console.log('doing edit update');
 	var parent = element.parent();
 	var newval = element.val();
 	var updateCallback = parent.data('postupdate');
@@ -191,7 +208,7 @@ function doEditUpdate( element) {
 			}
 		},
 		error: function(xhr, status, errorThrown){
-			alert( 'Unkown error: '+xhr);
+			alert( 'Unkown error: '+JSON.stringify(xhr));
 			console.dir(xhr);
 		},
 	});
@@ -218,7 +235,7 @@ function doAjaxDeleteItem(){
 			}
 		},
 		error: function(xhr, status, errorThrown){
-			alert( 'Unkown error: '+xhr);
+			alert( 'Unkown error: '+JSON.stringify(xhr));
 			console.dir(xhr);
 		},
 	});			
@@ -247,7 +264,7 @@ function doAjaxCreateItem(){
 			if (data['status'] != 'success') {
 				alert("Operation failed: "+data['message']);
 			}
-			else {
+			else {			
 				var parentid = '#'+module+'s-'+formdata['project_id'];
 				$(parentid).append( data['data']['html']);
 				flashClass( $(parentid), "successResult");
@@ -260,11 +277,23 @@ function doAjaxCreateItem(){
 			}
 		},
 		error: function(xhr, status, errorThrown){
-			alert( 'Unkown error: '+xhr);
+			alert( 'Unkown error: '+JSON.stringify(xhr));
 			console.dir(xhr);
 		},
 	});		
 	return false;
+}
+
+function moveItem(element, direction) {
+	if (direction === 'up') {
+		element.prev().before( element);
+	}
+	else if (direction === 'down') {
+		element.next().after( element);
+	}
+	else {
+		alert("Invalid direction: "+direction);
+	}
 }
 
 function enhance(firstpass){
@@ -284,6 +313,38 @@ function enhance(firstpass){
 			event.preventDefault();
 			return false;
 		}
+	});
+	
+	$('.ajaxMove').submit(function(event){
+		event.preventDefault();
+
+		var thisMov = $(this).closest('.moveable');
+		var direction = $(this).data('direction');
+		
+		$.ajax( $(this).attr('action'), {
+			method: "post",
+			dataType: "json",
+			data: $(this).serialize(),
+			success: function( data){
+				if (data['status'] == 'success') {			
+					flashClass( thisMov, "successResult");				
+					moveItem(thisMov, direction);
+				}
+				else if ( data['status'] == 'error') {
+					alert("Operation failed: "+data['message']);
+					flashClass( thisMov, "errorResult");					
+				}
+				else if ( data['status'] == 'warning') {
+					flashClass( thisMov, "warningResult");
+				}
+			},
+			error: function(xhr, status, errorThrown){
+				alert( 'Unkown error: '+JSON.stringify(xhr));
+				console.dir(xhr);
+			},
+		});		
+	
+		return false;
 	});
 	
 	$('.editable').off('click').click(function(){
@@ -308,6 +369,7 @@ function enhance(firstpass){
 			doEditUpdate( $(this));
 		});
 	});
+	
 	$('.ajax-form').off('submit').submit(doAjaxCreateItem);	
 	$('.ajaxDelete').off('submit').submit(doAjaxDeleteItem);	
 }

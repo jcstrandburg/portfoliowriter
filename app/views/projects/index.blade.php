@@ -16,13 +16,38 @@
 	</div>
 
 	@foreach ($projects as $project)
-		<div class='container'>
+		<div class='container moveable'>
 			<div class='section'>
 				<h1 class='editable heading' data-operation='update-project' data-field='name' data-id='{{$project->id}}'>{{$project->name}}</h1>
+				<h4>Project is 
+				@if ($project->hidden)
+					hidden
+				@else
+					visible
+				@endif
+				</h4>
 				<button type='button' class='js-showhide enhanceShow'>Expand/Hide</button>
+				<?php
+				$params = array('class'=>'project', 'id'=>$project->id, 'direction'=>'up');
+				echo View::make('sorting.form')->withParams($params);
+				$params = array('class'=>'project', 'id'=>$project->id, 'direction'=>'down');
+				echo View::make('sorting.form')->withParams($params);
+				
+				if ($project->hidden) {
+					$swapVis = 'visible';
+				}				
+				else {
+					$swapVis = 'hidden';
+				}
+				?>
 				{{ Form::open( array('method'=>'delete', 'route'=>['projects.destroy', $project->id]))}} 
 					<button type='submit'>Delete</button>
-				{{ Form::close() }}<br>	
+				{{ Form::close() }}
+				{{ Form::open( array('method'=>'post', 'url'=>'projects/set-visibility')) }}
+					{{ Form::hidden('id', $project->id) }}
+					{{ Form::hidden('visibility', $swapVis) }}
+					{{ Form::submit('Make '.ucwords($swapVis)) }}
+				{{ Form::close() }}
 			</div>
 			
 			<div class='subsection'>
@@ -53,6 +78,17 @@
 					<?php $bullet = new Bullet; $bullet->project_id = $project->id;?>
 					<div class='enhanceShow'>@include('bullet.inline_create')</div>
 					<div class='enhanceHide'>{{link_to_route( 'bullet.create', 'Add Bullet', ['project_id'=>$project->id])}}</div>
+				</div>
+				<div class='section'>
+					<h2>Tags:</h2>
+					<div id='tags-{{$project->id}}'>					
+						@foreach ($project->tags as $tag)
+							@include( "projects.tagadmin")
+						@endforeach
+					</div>
+					<?php $tag = new Tag; $tag->project_id = $project->id;?>
+					<div class='enhanceShow'>@include('tag.inline_create')</div>
+					<div class='enhanceHide'>{{link_to_route( 'tag.create', 'Add Tag', ['project_id'=>$project->id])}}</div>
 				</div>
 				<div class='section'>
 					<h2>Images:</h2>

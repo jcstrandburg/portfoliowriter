@@ -41,13 +41,15 @@ class LinkController extends \BaseController {
 	 * @return Response
 	 */
 	public function store()	{
-		$this->link->fill( Input::all());	
+		$this->link->fill( Input::all());
 		
 		if ( !$this->link->valid()) {
 			return Redirect::back()->withInput()->with('errors', $this->link->errors);
 		}
 		else {
-			$this->link->save();		
+			$this->link->save();
+			$this->link->sortorder = $this->link->id;
+			$this->link->update();
 			return Redirect::route('projects.index');
 		}
 	}

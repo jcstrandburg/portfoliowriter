@@ -50,7 +50,9 @@ class ImageController extends \BaseController {
 			return Redirect::back()->withInput()->with('errors', $this->image->errors);
 		}
 		else {
-			$this->image->save();		
+			$this->image->save();
+			$this->image->sortorder = $this->image->id;
+			$this->image->update();			
 			return Redirect::route('projects.index');
 		}
 	}
