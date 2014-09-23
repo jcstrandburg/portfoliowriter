@@ -2,6 +2,10 @@
 
 class ApiController extends BaseController {
 
+	public function __construct() {
+		$this->beforeFilter('auth');		
+	}	
+
 	protected function success($data, $message) {
 		//header('Content-Type: application/json');
 		return Response::json( ['status'=>'success', 'data'=>$data, 'message'=>$message]);
