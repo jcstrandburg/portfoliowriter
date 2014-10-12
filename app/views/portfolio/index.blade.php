@@ -23,7 +23,7 @@
 	<div class='menu'>
 		<a href='javascript:void(0);' class='menuButton'>Menu</a>	
 		<ul>	
-			<li><a href='#bio'>About Me</a></li><li><a target='_blank' href='https://docs.google.com/document/d/1pq3KNPXM51o-LWv16tiEZlH71mAJFGqqcOLzSdK8T98/edit?usp=sharing'>Resume</a></li><li><a href='javascript:void(0);'>Projects</a>
+			<li><a href='#bio'>About Me</a></li><li><a target='_blank' href='{{$resumeURL->value}}'>Resume</a></li><li><a href='javascript:void(0);'>Projects</a>
 				<ul>
 					@foreach ($projects as $project)
 						<li><a href='#project-{{$project->id}}'>{{$project->name}}</a></li>

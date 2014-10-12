@@ -13,7 +13,8 @@ class ProjectsController extends BaseController {
 		$projects = Project::orderBy('sortorder')->get();
 		$miscs = Misc::all();
 		$bio = Misc::where('name', '=', 'bio')->firstOrFail();
-		return View::make('projects.index')->with('projects', $projects)->with('bio', $bio);
+		$resumeURL = Misc::where('name', '=', 'resumeURL')->firstOrFail();
+		return View::make('projects.index')->with('projects', $projects)->with('bio', $bio)->with('resumeURL', $resumeURL);
 	}
 	
 	public function create() {

@@ -43,7 +43,8 @@ Route::get('logout', function(){
 Route::get('preview', array('before'=>'auth', function(){
 	$projects = Project::orderBy('sortorder')->get();
 	$bio = Misc::where('name', '=', 'bio')->firstOrFail();
-	return View::make('portfolio.index')->withProjects( $projects)->withPreview(true)->withBio( $bio);
+	$resumeURL = Misc::where('name', '=', 'resumeURL')->firstOrFail();		
+	return View::make('portfolio.index')->withProjects( $projects)->withPreview(true)->withBio( $bio)->with( "resumeURL", $resumeURL);
 }));
 
 function make_thumb($src, $dest, $desired_width) {
@@ -88,6 +89,10 @@ Route::get('thumbtest', function(){
 
 Route::get('publish', function(){
 	ob_start();
+	
+	$projects = Project::orderBy('sortorder')->get();
+	$bio = Misc::where('name', '=', 'bio')->firstOrFail();
+	$resumeURL = Misc::where('name', '=', 'resumeURL')->firstOrFail();	
 
 	$images = Image::all();
 	foreach ($images as $image) {
@@ -109,7 +114,7 @@ Route::get('publish', function(){
 
 	$projects = Project::orderBy('sortorder')->get();
 	$bio = Misc::where('name', '=', 'bio')->firstOrFail();
-	$html = View::make('portfolio.index')->withProjects( $projects)->withPreview(false)->withBio($bio);
+	$html = View::make('portfolio.index')->withProjects( $projects)->withPreview(false)->withBio($bio)->with( "resumeURL", $resumeURL);	;
 	$path = public_path().'/index.html';
 	file_put_contents( $path, $html);
 	

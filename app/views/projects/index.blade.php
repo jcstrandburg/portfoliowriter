@@ -8,9 +8,12 @@
 		</div>
 		<div class='subsection'>
 			<div class='section'>
-				<h2>Bio Text</h2>
+				<h3>Bio Text</h3>
 				<div class='editable' data-operation='update-misc' data-field='{{$bio->name}}' data-id='{{$bio->id}}'>{{$bio->value}}</div>
-				{{link_to_route( 'misc.edit', "Edit Field", $bio->id, array('class'=>'enhanceHide'))}}				
+				{{link_to_route( 'misc.edit', "Edit Field", $bio->id, array('class'=>'enhanceHide'))}}
+				<h3>Resume URL</h3>				
+				<span class='editable' data-operation='update-misc' data-field='{{$resumeURL->name}}' data-id='{{$resumeURL->id}}'>{{$resumeURL->value}}</div>
+				{{link_to_route( 'misc.edit', "Edit Field", $resumeURL->id, array('class'=>'enhanceHide'))}}				
 			</div>
 		</div>
 	</div>
