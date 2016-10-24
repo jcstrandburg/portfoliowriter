@@ -72,7 +72,7 @@
 			border: solid 1px gray;
 			padding: .5em;
 			margin: .25em;
-			border-radius: .75em;
+			border-radius: .25em;
 		}
 		
 		.section {
