@@ -13,7 +13,10 @@
 				{{link_to_route( 'misc.edit', "Edit Field", $bio->id, array('class'=>'enhanceHide'))}}
 				<h3>Resume URL</h3>				
 				<span class='editable' data-operation='update-misc' data-field='{{$resumeURL->name}}' data-id='{{$resumeURL->id}}'>{{$resumeURL->value}}</span>
-				{{link_to_route( 'misc.edit', "Edit Field", $resumeURL->id, array('class'=>'enhanceHide'))}}				
+				{{link_to_route( 'misc.edit', "Edit Field", $resumeURL->id, array('class'=>'enhanceHide'))}}		
+				<h3>GitHib URL</h3>				
+				<span class='editable' data-operation='update-misc' data-field='{{$githubURL->name}}' data-id='{{$githubURL->id}}'>{{$githubURL->value}}</span>
+				{{link_to_route( 'misc.edit', "Edit Field", $githubURL->id, array('class'=>'enhanceHide'))}}								
 			</div>
 		</div>
 	</div>

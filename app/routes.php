@@ -44,7 +44,12 @@ Route::get('preview', array('before'=>'auth', function(){
 	$projects = Project::orderBy('sortorder')->get();
 	$bio = Misc::where('name', '=', 'bio')->firstOrFail();
 	$resumeURL = Misc::where('name', '=', 'resumeURL')->firstOrFail();		
-	return View::make('portfolio.index')->withProjects( $projects)->withPreview(true)->withBio( $bio)->with( "resumeURL", $resumeURL);
+	$githubURL = Misc::where('name', '=', 'githubURL')->firstOrFail();	
+	return View::make('portfolio.index')
+		->withProjects( $projects)->withPreview(true)
+		->withBio( $bio)
+		->with( "resumeURL", $resumeURL)
+		->with('githubURL', $githubURL);
 }));
 
 function make_thumb($src, $dest, $desired_width) {

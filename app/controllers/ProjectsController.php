@@ -14,7 +14,12 @@ class ProjectsController extends BaseController {
 		$miscs = Misc::all();
 		$bio = Misc::where('name', '=', 'bio')->firstOrFail();
 		$resumeURL = Misc::where('name', '=', 'resumeURL')->firstOrFail();
-		return View::make('projects.index')->with('projects', $projects)->with('bio', $bio)->with('resumeURL', $resumeURL);
+		$githubURL = Misc::where('name', '=', 'githubURL')->firstOrFail();		
+		return View::make('projects.index')
+			->with('projects', $projects)
+			->with('bio', $bio)
+			->with('resumeURL', $resumeURL)
+			->with('githubURL', $githubURL);
 	}
 	
 	public function create() {
