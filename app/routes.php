@@ -96,8 +96,9 @@ Route::get('publish', function(){
 	ob_start();
 	
 	$projects = Project::orderBy('sortorder')->get();
-	$bio = Misc::where('name', '=', 'bio')->firstOrFail();
+	$bio 	  = Misc::where('name', '=', 'bio')->firstOrFail();
 	$resumeURL = Misc::where('name', '=', 'resumeURL')->firstOrFail();	
+	$githubURL = Misc::where('name', '=', 'githubURL')->firstOrFail();	
 
 	$images = Image::all();
 	foreach ($images as $image) {
@@ -117,9 +118,13 @@ Route::get('publish', function(){
 		echo "<br>";
 	}
 
-	$projects = Project::orderBy('sortorder')->get();
-	$bio = Misc::where('name', '=', 'bio')->firstOrFail();
-	$html = View::make('portfolio.index')->withProjects( $projects)->withPreview(false)->withBio($bio)->with( "resumeURL", $resumeURL);	;
+	$html = View::make('portfolio.index')
+		->withProjects( $projects)
+		->withPreview(false)
+		->withBio($bio)
+		->with( "resumeURL", $resumeURL)
+		->with( "githubURL", $githubURL)
+		->render();
 	$path = public_path().'/index.html';
 	file_put_contents( $path, $html);
 	
